@@ -1,33 +1,36 @@
 import {promises as fsPromises} from "fs";
 import imagesize from "image-size";
+import path from "path";
 import sharp from "sharp";
 
 const checkImageInFull =async (filename:string)=>{
-    const image = `assets/full/${filename}.jpg`
-    try {
-        await fsPromises.access(image)
-        return true
-      } catch (err){
-        return false
-      }
+  const imageInFull = path.resolve('./') + `/assets/full/${filename}.jpg`;
+  try {
+    await fsPromises.access(imageInFull)
+    return true
+  } catch {
+    return false
+  }
 }
 
 const checkImageInThumb = async (filename:string,width:number,height:number)=>{
-  const image = `assets/thumb/${filename}.jpg`
+  const imageInThumb = path.resolve('./') + `/assets/thumb/${filename}.jpg`;
   try {
-      const dimensions = imagesize(image);
-      if(dimensions.width == width && dimensions.height == height) return false
-      return true
-    } catch (err){
-      return false
-    }
+    const dimensions = imagesize(imageInThumb);
+    if(dimensions.width == width && dimensions.height == height) return false
+    return true
+  } catch (err){
+    return false
+  }
 }
 
 const saveImage = async (filename:string,width:number,height:number)=>{
-
-  sharp(`assets/full/${filename}.jpg`)
+  const imageInFull = path.resolve('./') + `/assets/full/${filename}.jpg`;
+  const imageInThumb = path.resolve('./') + `/assets/thumb/${filename}.jpg`;
+  sharp(imageInFull)
   .resize(width, height)
-  .toFile(`assets/thumb/${filename}.jpg`, (err, info) => {});
+  .toFile(imageInThumb, (err, info) => {});
+  return imageInThumb;
 }
 
 

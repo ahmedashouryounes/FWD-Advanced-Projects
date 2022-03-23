@@ -1,5 +1,6 @@
 import express from 'express';
 import {Request,Response} from 'express';
+import path from 'path';
 import {checkImageInFull,checkImageInThumb,saveImage} from '../../uititiles/checkImage';
 const imageRoute = express.Router();
 
@@ -21,14 +22,12 @@ imageRoute.get("/images", async (req:Request, res:Response)=> {
     return res.status(400).send("Image not found");
   }
 
-    if(await checkImageInThumb(fileName, width, height)) {
+  if(await checkImageInThumb(fileName, width, height)) {
     return res.status(400).send("Image Resized before");
   }
 
-  await saveImage(fileName,width,height);
-
-  res.status(200).sendFile(`assets/thumb/${fileName}.jpg`);
-
+  const resize = await saveImage(fileName,width,height);
+  res.status(200).sendFile(resize);
 })
 
 

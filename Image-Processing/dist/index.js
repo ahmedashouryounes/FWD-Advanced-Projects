@@ -9,6 +9,9 @@ const app = (0, express_1.default)();
 const port = 3000;
 app.use(express_1.default.json());
 app.use(express_1.default.static('assets'));
+app.get("/", (req, res) => {
+    res.status(200).send("Image Processing API");
+});
 app.use('/api', routes_1.default);
 app.listen(port, () => console.log('Server running on port ' + port));
 exports.default = app;

@@ -28,7 +28,7 @@ const checkImageInFull = (filename) => __awaiter(void 0, void 0, void 0, functio
 });
 exports.checkImageInFull = checkImageInFull;
 const checkImageInThumb = (filename, width, height) => __awaiter(void 0, void 0, void 0, function* () {
-    const imageInThumb = path_1.default.resolve('./') + `/assets/thumb/${filename}.jpg`;
+    const imageInThumb = path_1.default.resolve('./') + `/assets/thumb/${filename}_${width}_${height}.jpg`;
     try {
         yield fs_1.promises.access(imageInThumb);
         return true;

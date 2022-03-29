@@ -13,10 +13,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const supertest_1 = __importDefault(require("supertest"));
-const index_1 = __importDefault(require("../index"));
+const index_1 = __importDefault(require("../../../index"));
 const request = (0, supertest_1.default)(index_1.default);
 describe('Test endpoint responses', () => {
-    it('Test / endpoint', () => __awaiter(void 0, void 0, void 0, function* () {
-        yield request.get('/').expect(200);
+    it('Test endpoint with name of image not exist', () => __awaiter(void 0, void 0, void 0, function* () {
+        yield request.get('/api/images?sfas&width=200&height=500').expect(400);
     }));
 });

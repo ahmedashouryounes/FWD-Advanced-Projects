@@ -1,4 +1,4 @@
-export type ORDER_PRODUCT = {
+export type ORDER_PRODUCTS = {
     id :string;
     quantity :number;
     order_id :string;

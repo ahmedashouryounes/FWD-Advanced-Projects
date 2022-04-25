@@ -19,4 +19,4 @@ const adminAuth = async (req: Request, res: Response, next: NextFunction) => {
         return;
     }
 };
-export default adminAuth
+export default adminAuth;

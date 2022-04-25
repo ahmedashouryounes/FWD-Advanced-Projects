@@ -2,9 +2,7 @@ import { ORDER } from './../types/order_type';
 import { Client } from '../database';
 
 export class OrderModel {
-
-    
-    async create(o: Omit<ORDER,"id">): Promise<ORDER> {
+    async create(o: Omit<ORDER, 'id'>): Promise<ORDER> {
         try {
             const connection = await Client.connect();
             const sql =
@@ -38,21 +36,29 @@ export class OrderModel {
             connection.release();
             return result.rows[0];
         } catch (err) {
-            throw new Error(`Could not find order with id ${id}. Error: ${err}`);
+            throw new Error(
+                `Could not find order with id ${id}. Error: ${err}`
+            );
         }
     }
 
-    async update(o:ORDER): Promise<ORDER> {
+    async update(o: ORDER): Promise<ORDER> {
         try {
             const connection = await Client.connect();
             const sql =
                 'UPDATE orders SET status=$1, user_id=$2 WHERE id=($3) RETURNING *';
-            const result = await connection.query(sql, [o.status, o.user_id,o.id]);
+            const result = await connection.query(sql, [
+                o.status,
+                o.user_id,
+                o.id,
+            ]);
             connection.release();
             const order = result.rows[0];
-            return order
+            return order;
         } catch (err) {
-            throw new Error(`Could not find order with id ${o.id}. Error: ${err}`);
+            throw new Error(
+                `Could not find order with id ${o.id}. Error: ${err}`
+            );
         }
     }
 
@@ -68,5 +74,4 @@ export class OrderModel {
             throw new Error(`Could not delete order ${id}. Error: ${err}`);
         }
     }
-
 }

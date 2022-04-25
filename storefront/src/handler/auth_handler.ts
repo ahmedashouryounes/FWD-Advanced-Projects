@@ -10,21 +10,21 @@ const token_secure = process.env.TOKEN_SECURE as string;
 const authModel = new AuthModel();
 
 export const signup = async (req: Request, res: Response) => {
-    const user : Omit<USER,"id">= {
+    const user: Omit<USER, 'id'> = {
         username: req.body.username,
-        password: req.body.password
+        password: req.body.password,
     };
     try {
         const u = await authModel.create(user);
         const token = jwt.sign(user, token_secure);
         res.send({ ...u, token });
     } catch (err) {
-        res.status(400).json({"err" : err});
+        res.status(400).json({ err: err });
     }
 };
 
 export const signin = async (req: Request, res: Response) => {
-    const user : Omit<USER,"id">= {
+    const user: Omit<USER, 'id'> = {
         username: req.body.username,
         password: req.body.password,
     };
@@ -37,6 +37,6 @@ export const signin = async (req: Request, res: Response) => {
             throw new Error('wrrong username or password');
         }
     } catch (err) {
-        res.status(400).json({"err" : err});
+        res.status(400).json({ err: err });
     }
 };

@@ -2,8 +2,7 @@ import { PRODUCT } from './../types/product_type';
 import { Client } from '../database';
 
 export class ProductModel {
-
-    async create(p: Omit<PRODUCT,"id">): Promise<PRODUCT> {
+    async create(p: Omit<PRODUCT, 'id'>): Promise<PRODUCT> {
         try {
             const sql =
                 'INSERT INTO products (name, price) VALUES($1, $2) RETURNING *';
@@ -19,7 +18,6 @@ export class ProductModel {
         }
     }
 
-
     async getMany(): Promise<PRODUCT[]> {
         try {
             const conn = await Client.connect();
@@ -32,7 +30,6 @@ export class ProductModel {
         }
     }
 
-
     async getOne(id: string): Promise<PRODUCT> {
         try {
             const conn = await Client.connect();
@@ -41,12 +38,13 @@ export class ProductModel {
             conn.release();
             return result.rows[0];
         } catch (err) {
-            throw new Error(`Could not find product with id ${id}. Error: ${err}`);
+            throw new Error(
+                `Could not find product with id ${id}. Error: ${err}`
+            );
         }
     }
 
-
-    async update(p:PRODUCT): Promise<PRODUCT> {
+    async update(p: PRODUCT): Promise<PRODUCT> {
         try {
             const conn = await Client.connect();
             const sql =
